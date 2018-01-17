@@ -1,0 +1,10 @@
+ex1
+man groups  [users]
+
+might also be good to use id -Gn or id -p
+
+
+go back and work on the ldapsearch 
+https://elearning.intra.42.fr/notions/piscine-c-day-01/subnotions/sort-cut/videos/sort-cut
+
+cut command is pretty helpful here
