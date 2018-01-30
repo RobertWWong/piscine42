@@ -1,0 +1,3 @@
+[submodule "day00/piscine42"]
+	path = day00/piscine42
+	url = https://github.com/RobertWWong/piscine42
