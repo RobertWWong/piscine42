@@ -26,66 +26,44 @@ int		ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-/*
-**	Need to doo lo + 1 on ft_sort since our lo is + 1 past the argv, otherwise we get the file name
-**
-*/
-int		ft_partition(char **arr, int lo, int hi)
+void	ft_print(char *str)
 {
-	char	*piv;
-	int		i;
-	int		j;
-	char	*swp;
-
-	swp = arr[0];
-	piv = arr[lo];
-	i = lo - 1;
-	j = hi + 1;
-
-	while (1)
-	{
-		while ((ft_strcmp(arr[i], piv)) < 0)
-			i += 1;
-		while ((ft_strcmp(arr[j], piv)) > 0)
-			j -= 1;
-		if (i >= j)
-			return (j);
-		swp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = arr[i];
-	}
-	return (0);
+	while (*str)
+		ft_putchar(*str++);
+	ft_putchar('\n');
 }
 
-void	ft_sort_params(char **arr, int lo, int hi)
+void	ft_sort_params(char **arr, int a_size)
 {
-	int pivot;
+	int		i;
+	int		j;
+	char	*tmp;
 
-	pivot = hi / 2;
-	if (lo < hi)
+	i = 1;
+	while (i < a_size)
 	{
-		ft_sort_params(arr, lo, pivot);
-		ft_sort_params(arr, pivot + 1, hi);
+		j = i + 1;
+		while (j < a_size)
+		{
+			if (ft_strcmp(arr[i], arr[j]) > 0)
+			{
+				tmp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = tmp;
+			}
+			j++;
+		}
+		i++;
 	}
-};
+}
 
-
-int		main(int argc, char *argv[])
+int		main(int argc, char **argv)
 {
-    // ft_print_program_name(argv[0]);
-    char *tmp;
-    char *tmp2;
+	int i;
 
-    printf("%s vs %s\n", argv[0], argv[1]);
-
-    tmp = argv[0];
-    argv[0] = argv[1];
-    argv[1] = tmp;
-    printf("%s vs %s\n", argv[0], argv[1]);
-
-    ft_sort_params(argv, 1, argc - 1);
-
-    printf("%s vs %s\n", argv[0], argv[1]);    
-
+	i = 1;
+	ft_sort_params(argv, argc);
+	while (i < argc)
+		ft_print(argv[i++]);
 	return (0);
 }
