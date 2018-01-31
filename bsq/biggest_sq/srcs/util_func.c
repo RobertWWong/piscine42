@@ -83,53 +83,62 @@ int		check_line_legend(char *str, int leg[4])
 }
 
 /*
-* This is a util function return 1 if the lines present in the map have
-* the correct characters, matching amounts of columns and rows, a newline
-* at the end of every row, or if the map is a column or row vector.
-* It will also create a 2d matrix to be return later
+* Check map util function that will compare map char to their specific legend
+* Returns -1 if the amount of column read is not consisent
+* Return -2 if there are unexpected characters inside the map.
+* Return the amount of rows read on a successful map reading.
 */
-int		check_map(char *str, int leg[4], int col_ck)
-{	
+int		check_map_util(char *str, int leg[4], int offset, int char_ck)
+{
 	int row;
 	int col;
-	int offset;
 	int line_ck;
-	int char_ck;
-	printf("%s\n", str);
+	int col_ck;
 
+	col_ck = 0;
 	line_ck = 0;
 	row = 0;
-	col = -1;
-	offset = 0;
-	while (str[offset] != '\n')
-		offset++;
+	col = 0;
 	while ((char_ck = str[row + ++col + offset + 1]) != '\0')
 	{	
-		printf("Char = %c 	Near perfection = %d\n", char_ck , col);
 		if (char_ck == '\n')
 		{
 			line_ck++;
 			row += col + 1;
 			if (!col_ck)
 				col_ck = col;
-			if (col != col_ck)
+			if (col != col_ck || (line_ck == leg[0] && *(str + row + offset) != '\n'))
 				return (-1);
-			// printf("row char = %d\n", row);
 			col = - 1;
 		}
 		else if (!(char_ck == leg[1] || char_ck == leg[2] || char_ck == leg[2]))
-			{
-				printf("Char = %c 	resulting col = %d\n", char_ck , col);
-				return (-3);
-			}
-		// if (row >1550)
-		// 	printf("Column = %d\n", col);
-
+				return (-2);
  	}
- 	printf("Line cking = %d\n", line_ck);
- 	printf("legs says = %d\n", leg[0]);
- 	printf("Amount of characters counted = %d\n", row);
-	if (line_ck != leg[0])
-		return (-2);
+ 	return (line_ck);
+}
+
+/*
+* This function checks if the lines present in the map have
+* the correct characters, matching amounts of columns and rows, or a newline
+* at the end of every row.
+* It calls a util function that will check each character for matching symbols
+* and returns the amount of rows read.
+* 
+* Return 1 for a valid map
+* Return -3 if the amount of rows read are not equal to the legend.
+*/
+int		check_map(char *str, int leg[4])
+{	
+	int offset;
+	int line_ck;
+
+	offset = 0;
+	while (str[offset] != '\n')
+		offset++;
+	line_ck = check_map_util(str, leg, offset, 0);
+	if (line_ck < 0)
+		return (line_ck);
+	else if (line_ck != leg[0])
+		return (-3);
  	return (1);
 }

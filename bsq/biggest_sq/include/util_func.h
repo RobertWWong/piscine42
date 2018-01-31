@@ -19,7 +19,8 @@
 void	putstrs(char *str);
 
 int		ft_atoi(char *str);
-int		check_map(char *str, int leg[4], int col_check);
+int		check_map(char *str, int leg[4]);
+int		check_map_util(char *str, int leg[4], int offset, int char_ck);
 int		check_line_legend(char *str, int leg[4]);
 int		ft_atoi(char *str);
 
