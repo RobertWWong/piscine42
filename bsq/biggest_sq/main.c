@@ -19,18 +19,24 @@
 
 /*
 * Fun with arrays, we will be using them to keep track of our legends
-*
+* HEY, THERE'S ONLY ONE MAP PER FILE
 *
 *
 */
-int main()
+int main(int c, char **argv)
 {
 	int		legend[4];
 	int 	fd;
-	char 	buff[1024];
+	char 	*buff;
+	size_t	buff_len;
 
-	fd = open ("maps/map1", O_RDONLY);
-	write_to_buffer(fd, buff, sizeof(buff) - 1);
+	if (c > 1)
+		fd = open (argv[1], O_RDONLY);
+	else
+		fd = open ("maps/map4", O_RDONLY);
+
+	printf("Is my file okay == %d\n", fd);
+	buff = write_to_buffer(fd, &buff_len);
 
 	printf("%s\nPerl map gen has newline already. It us our responsibility to check if they follow that conventions for all other maps\n", buff);
 
@@ -40,7 +46,7 @@ int main()
 	//time for some bastardization of record keeping.
 	for (int i = 0; i < 4; ++i)
 	{
-		
+
 		printf("%c\n", (char)legend[i]);
 	}
 	close (fd);

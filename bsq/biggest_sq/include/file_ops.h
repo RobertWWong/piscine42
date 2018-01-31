@@ -20,7 +20,7 @@
 # include <unistd.h>
 
 int		open_file(char *str);
-int		write_to_buffer(int file_desc, char *buffer, size_t buff_size);
-
+char	*ft_strcpy(char *dest, char *src);
+char	*write_to_buffer(int file_desc, size_t &buff_size);
 
 #endif
