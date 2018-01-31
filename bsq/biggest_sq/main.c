@@ -56,7 +56,7 @@ void	create_2d_arr()
 	fd = open ("maps/map4", O_RDONLY);
 	buff = write_to_buffer(fd);
 	check_line_legend(buff, legend);
-	printf("Should be a valid map = %d\n", check_map(buff, legend));
+	printf("Should be a valid map = %d\n", check_map(buff, legend, 0));
 }
 
 /*

@@ -56,25 +56,25 @@ int		ft_atoi(char *str)
 * This function will read the first line of the file and assign the
 * length, empty, full, and obstacle values to the global variable
 * Return 1 character assignment went well
-* Return -1 if amount of character legends is not met
+* Return -1 if amount of character legs is not met
 * Return -2 if more characters than necessary are present on the first line
 */
 
-int		check_line_legend(char *str, int legend[4])
+int		check_line_legend(char *str, int leg[4])
 {
 	int i;
 
 	i = 0;
-	legend[0] = ft_atoi(str);
+	leg[0] = ft_atoi(str);
 	while (str[i] != '\n' && str[i])
 	{
 		while (str[i] >= '0' && str[i] <= '9')
 			i++;
 		if (str[i] == '\n' || str[i + 1] == '\n' || str[i + 2] == '\n')
 			return (-1);
-		legend[1] = str[i];
-		legend[2] = str[i + 1];
-		legend[3] = str[i + 2];
+		leg[1] = str[i];
+		leg[2] = str[i + 1];
+		leg[3] = str[i + 2];
 		i += 3;
 		if (str[i] != '\n')
 			return (-2);
@@ -88,38 +88,48 @@ int		check_line_legend(char *str, int legend[4])
 * at the end of every row, or if the map is a column or row vector.
 * It will also create a 2d matrix to be return later
 */
-int		check_map(char *str, int legend[4])
+int		check_map(char *str, int leg[4], int col_ck)
 {	
 	int row;
 	int col;
 	int offset;
-	int line_check;
+	int line_ck;
+	int char_ck;
 	printf("%s\n", str);
 
-	line_check = 0;
+	line_ck = 0;
 	row = 0;
 	col = -1;
 	offset = 0;
 	while (str[offset] != '\n')
 		offset++;
-	while (str[row + ++col + offset + 1] != '\0')
-	{
-		if (str[row + col + offset + 1] == '\n')
+	while ((char_ck = str[row + ++col + offset + 1]) != '\0')
+	{	
+		printf("Char = %c 	Near perfection = %d\n", char_ck , col);
+		if (char_ck == '\n')
 		{
-			line_check++;
-			row += col;
-			printf("row char = %d\n", row);
-			col = 0;
+			line_ck++;
+			row += col + 1;
+			if (!col_ck)
+				col_ck = col;
+			if (col != col_ck)
+				return (-1);
+			// printf("row char = %d\n", row);
+			col = - 1;
 		}
-		if (row >1550)
-			printf("Column = %d\n", col);
+		else if (!(char_ck == leg[1] || char_ck == leg[2] || char_ck == leg[2]))
+			{
+				printf("Char = %c 	resulting col = %d\n", char_ck , col);
+				return (-3);
+			}
+		// if (row >1550)
+		// 	printf("Column = %d\n", col);
 
  	}
- 	printf("Line checking = %d\n", line_check);
- 	printf("Legends says = %d\n", legend[0]);
+ 	printf("Line cking = %d\n", line_ck);
+ 	printf("legs says = %d\n", leg[0]);
  	printf("Amount of characters counted = %d\n", row);
-	if (line_check != legend[0])
-		return (0);
-	(void) str;
-	return (1);
+	if (line_ck != leg[0])
+		return (-2);
+ 	return (1);
 }
