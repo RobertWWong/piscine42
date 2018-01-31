@@ -86,10 +86,40 @@ int		check_line_legend(char *str, int legend[4])
 * This is a util function return 1 if the lines present in the map have
 * the correct characters, matching amounts of columns and rows, a newline
 * at the end of every row, or if the map is a column or row vector.
-*
+* It will also create a 2d matrix to be return later
 */
-int		check_map(char *str)
-{
+int		check_map(char *str, int legend[4])
+{	
+	int row;
+	int col;
+	int offset;
+	int line_check;
+	printf("%s\n", str);
+
+	line_check = 0;
+	row = 0;
+	col = -1;
+	offset = 0;
+	while (str[offset] != '\n')
+		offset++;
+	while (str[row + ++col + offset + 1] != '\0')
+	{
+		if (str[row + col + offset + 1] == '\n')
+		{
+			line_check++;
+			row += col;
+			printf("row char = %d\n", row);
+			col = 0;
+		}
+		if (row >1550)
+			printf("Column = %d\n", col);
+
+ 	}
+ 	printf("Line checking = %d\n", line_check);
+ 	printf("Legends says = %d\n", legend[0]);
+ 	printf("Amount of characters counted = %d\n", row);
+	if (line_check != legend[0])
+		return (0);
 	(void) str;
 	return (1);
 }

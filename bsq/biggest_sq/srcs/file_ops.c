@@ -36,7 +36,7 @@ char	*ft_strcpy(char *dest, char *src)
 * This will allow us to read character in a steadily manner. Will change the buffer size
 * accordingly as well.
 */
-char	*write_to_buffer(int file_desc, size_t &buff_size)
+char	*write_to_buffer(int file_desc)
 {
 	char	*buffer;
 	char	*old_buff;
@@ -58,9 +58,8 @@ char	*write_to_buffer(int file_desc, size_t &buff_size)
 		ft_strcpy(buffer, old_buff);
 		free(old_buff);
 	}
-	buff_size = buffer_size;
 	return (buffer);
 }
 
 //When will i need to use malloc, realloc, and calloc? figure that out
-// int		ft_realloc()
+// char	*ft_realloc()

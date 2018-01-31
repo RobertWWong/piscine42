@@ -21,6 +21,6 @@
 
 int		open_file(char *str);
 char	*ft_strcpy(char *dest, char *src);
-char	*write_to_buffer(int file_desc, size_t &buff_size);
+char	*write_to_buffer(int file_desc);
 
 #endif
