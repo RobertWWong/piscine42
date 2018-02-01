@@ -54,16 +54,7 @@ void	create_2d_arr(void)
 	printf("\n\nAmount of rows in this map = %d\nAmount of Columns in this Map = %d\n", map_val->row, map_val->col_ck);
 	
 	arr = init_2d_map(map_val);
-	arr[0][0] = 'a';
-	arr[0][1] = 'b';
-	arr[0][3] = 'c';
-	arr[0][2] = 'd';
-	printf("%s\n", arr[0]);
-	// arr[0][0] = 'd';
-	// arr[0][1] = 'e';
-	// arr[0][3] = 'q';
-	// arr[0][2] = 't';
-	// printf("%s\n", arr[0]);
+	parse_to_map(map_val, arr, buff);
 
 }
 

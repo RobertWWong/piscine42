@@ -13,6 +13,15 @@
 #include "util_func.h"
 #include <stdio.h>
 
+void   putstrs(char *str)
+{
+       int i;
+
+       i = 0;
+       while (str[i])
+           write(1, &str[i++], 1);
+}
+
 /*
 ** atoi function to determine length of our square map
 */

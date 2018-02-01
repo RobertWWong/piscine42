@@ -16,5 +16,6 @@
 # include <stdio.h>
 
 char	**init_2d_map(t_map *map_val);
+void	parse_to_map(t_map *mv, char **map_arr, char *str);
 
 #endif
