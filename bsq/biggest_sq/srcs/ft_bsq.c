@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
+#include <stdio.h>
 
 /*
 ** Takes a 2d char array and its respective map info in order to find the 
@@ -64,7 +65,7 @@ int		dp_sq(char **map, t_map *info, int **sq_val)
 				sq_val[row][col] = 0;
 		}
 	}
-	return (find_max(sq_val, info, bsq));
+	return (find_max(sq_val, info, bsq, map));
 }
 
 /*
@@ -90,9 +91,10 @@ int		get_min(int **sq_val, int row, int col)
 /*
 ** Return -1 if no solution can be found at all
 ** Otherwise, change the array starting at the given bsq->row positions
+** FORGOT TO PLACE ORIGINAL STRING IN HERE
 */
 
-int		find_max(int **sq_val, t_map *info, t_best_sq bsq)
+int		find_max(int **sq_val, t_map *info, t_best_sq bsq, char **map)
 {
 	int row;
 	int col;
@@ -112,11 +114,11 @@ int		find_max(int **sq_val, t_map *info, t_best_sq bsq)
 	}
 	if (!bsq.length)
 		return (-1);
-	then_fill(sq_val, info, bsq);
+	then_fill(map, info, bsq);
 	return (1);
 }
 
-int		then_fill(int **sq_val, t_map *info, t_best_sq bsq)
+int		then_fill(char **map, t_map *info, t_best_sq bsq)
 {
 	int length;
 	int row;
@@ -130,7 +132,7 @@ int		then_fill(int **sq_val, t_map *info, t_best_sq bsq)
 		col = bsq.col;
 		while (length)
 		{
-			sq_val[bsq.row][col] = info->leg[3];
+			map[bsq.row][col--] = info->leg[3];
 			length--;
 		}
 		bsq.row--;

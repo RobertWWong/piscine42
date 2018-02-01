@@ -24,7 +24,7 @@ typedef struct	s_best_sq
 int				solve_bsq(char **map, t_map *info);
 int				dp_sq(char **map, t_map *info, int **sq_val);
 int				get_min(int **sq_val, int row, int col);
-int				find_max(int **sq_val, t_map *info, t_best_sq bsq);
-int				then_fill(int **sq_val, t_map *info, t_best_sq bsq);
+int				find_max(int **sq_val, t_map *info, t_best_sq bsq, char **map);
+int				then_fill(char **map, t_map *info, t_best_sq bsq);
 
 #endif
