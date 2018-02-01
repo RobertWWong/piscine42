@@ -25,13 +25,14 @@ typedef struct	s_map
 	int col;
 	int col_ck;
 	int offset;
+	int leg[4];
 
 }				t_map;
 
 void	putstrs(char *str);
 int		ft_atoi(char *str);
-int		check_map(char *str, int leg[4], t_map *map);
-int		check_map_util(char *str, int leg[4], int offset, t_map *map);
-int		check_line_legend(char *str, int leg[4]);
+int		check_map(char *str, t_map *map);
+int		check_map_util(char *str, int offset, t_map *map);
+int		check_line_legend(char *str, t_map *map);
 
 #endif

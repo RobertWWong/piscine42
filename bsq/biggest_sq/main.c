@@ -23,11 +23,20 @@
 ** HEY, THERE'S ONLY ONE MAP PER FILE
 */
 
+// void	parse_arg(char *str )
+
+
 int		main(int argc, char **argv)
 {
-	// test_and_stuff(c, argv);
-	create_2d_arr();
-	(void)argc;
-	(void)argv;
+	int count;
+	int	fd;
+
+	count = 0;
+	
+	if (argc > 1)
+		fd = open(argv[1], O_RDONLY);
+	else
+		fd = open("maps/map4", O_RDONLY);
+	buff = write_to_buffer(fd);
 	return (0);
 }

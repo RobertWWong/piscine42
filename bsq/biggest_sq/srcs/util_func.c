@@ -13,15 +13,6 @@
 #include "util_func.h"
 #include <stdio.h>
 
-void	putstrs(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		write(1, &str[i], 1);
-}
-
 /*
 ** atoi function to determine length of our square map
 */
@@ -60,21 +51,21 @@ int		ft_atoi(char *str)
 ** Return -2 if more characters than necessary are present on the first line
 */
 
-int		check_line_legend(char *str, int leg[4])
+int		check_line_legend(char *str, t_map *map)
 {
 	int i;
 
 	i = 0;
-	leg[0] = ft_atoi(str);
+	map->leg[0] = ft_atoi(str);
 	while (str[i] != '\n' && str[i])
 	{
 		while (str[i] >= '0' && str[i] <= '9')
 			i++;
 		if (str[i] == '\n' || str[i + 1] == '\n' || str[i + 2] == '\n')
 			return (-1);
-		leg[1] = str[i];
-		leg[2] = str[i + 1];
-		leg[3] = str[i + 2];
+		map->leg[1] = str[i];
+		map->leg[2] = str[i + 1];
+		map->leg[3] = str[i + 2];
 		i += 3;
 		if (str[i] != '\n')
 			return (-2);
@@ -89,7 +80,7 @@ int		check_line_legend(char *str, int leg[4])
 ** Return the amount of rows read on a successful map reading.
 */
 
-int		check_map_util(char *str, int leg[4], int offset, t_map *map)
+int		check_map_util(char *str, int offset, t_map *map)
 {
 	int line_ck;
 	int char_ck;
@@ -104,11 +95,12 @@ int		check_map_util(char *str, int leg[4], int offset, t_map *map)
 			if (!map->col_ck)
 				map->col_ck = map->col;
 			if (map->col != map->col_ck ||
-				(line_ck == leg[0] && *(str + map->row + offset) != '\n'))
+				(line_ck == map->leg[0] && *(str + map->row + offset) != '\n'))
 				return (-1);
 			map->col = -1;
 		}
-		else if (!(char_ck == leg[1] || char_ck == leg[2] || char_ck == leg[2]))
+		else if (!(char_ck == map->leg[1] ||
+			char_ck == map->leg[2] || char_ck == map->leg[2]))
 			return (-2);
 	}
 	return (line_ck);
@@ -125,7 +117,7 @@ int		check_map_util(char *str, int leg[4], int offset, t_map *map)
 ** Return -4 for any internal errors and frees the struct map
 */
 
-int		check_map(char *str, int leg[4], t_map *map)
+int		check_map(char *str, t_map *map)
 {
 	int line_ck;
 
@@ -135,12 +127,12 @@ int		check_map(char *str, int leg[4], t_map *map)
 	map->offset = 0;
 	while (str[map->offset] != '\n')
 		map->offset++;
-	line_ck = check_map_util(str, leg, map->offset, map);
-	if (line_ck != leg[0] || line_ck < 0)
+	line_ck = check_map_util(str, map->offset, map);
+	if (line_ck != map->leg[0] || line_ck < 0)
 	{
 		free(map);
 		return (-4);
 	}	
-	map->row = leg[0];
+	map->row = map->leg[0];
 	return (1);
 }
