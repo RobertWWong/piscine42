@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_creator.h                                      :+:      :+:    :+:   */
+/*   ft_bsq.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rowong <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/31 14:47:27 by rowong            #+#    #+#             */
-/*   Updated: 2018/01/31 14:47:29 by rowong           ###   ########.fr       */
+/*   Created: 2018/01/31 20:28:19 by rowong            #+#    #+#             */
+/*   Updated: 2018/01/31 20:28:21 by rowong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_CREATOR_H
-# define MAP_CREATOR_H
+#ifndef FT_BSQ_H
+# define FT_BSQ_H
 # include "util_func.h"
-# include <stdio.h>
 
-void	print_map(t_map *map, char **arr, int i);
-char	**init_2d_map(t_map *map_val);
-int		parse_to_map(t_map *mv, char **map_arr, char *str);
-void	free_map_arr(char **map_arr, t_map *info);
+typedef struct	s_best_sq
+{
+	int row;
+	int col;
+	int length;
+}				t_best_sq;
+
+int				solve_bsq(char **map, t_map *info);
+int				dp_sq(char **map, t_map *info, int **sq_val);
+int				get_min(int **sq_val, int row, int col);
+int				find_max(int **sq_val, t_map *info, t_best_sq bsq);
+int				then_fill(int **sq_val, t_map *info, t_best_sq bsq);
 
 #endif

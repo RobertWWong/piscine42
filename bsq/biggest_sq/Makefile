@@ -10,7 +10,7 @@ all: $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $(OUTPUT) && make clean
 	
 clean:
-	rm -f $(SRC_DIR)*.o *~ core
+	rm -f *.o $(SRC_DIR)*.o *~ core
 
 fclean: clean
 	rm -f $(OUTPUT)

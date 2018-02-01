@@ -11,8 +11,19 @@
 /* ************************************************************************** */
 
 #include "map_creator.h"
-#include <stdio.h>
 
+void	print_map(t_map *map, char **arr, int i)
+{
+	while (++i < map->row)
+		{
+			putstrs(arr[i]);
+			putstrs("\n");
+		}
+}
+
+/*
+** Creates and returns 2d char array for recording our map values.
+*/
 char	**init_2d_map(t_map *map_val)
 {
 	int 	c;
@@ -25,26 +36,49 @@ char	**init_2d_map(t_map *map_val)
 	return (arr);
 }
 
-void	parse_to_map(t_map *mv, char **map_arr, char *str)
+/*
+** Parse from a contiguous string to a 2d char array the values of each str char
+** A valid map must be given, else this function returns a -1
+** prints the 2d map and return a 1 upon completion
+*/
+
+int		parse_to_map(t_map *mv, char **map_arr, char *str)
 {
 	int row;
 	int col;
 	int char_v;
+	int valid_string;
 
+	valid_string = 0;
+	while (str[valid_string])
+		valid_string++;
+	if (valid_string != (mv->row * (mv->col_ck + 1) + mv->offset + 1))
+	{
+		return (-1);
+	}
 	row = 0;
 	col = -1;
 	while((char_v = str[mv->offset + 1 + row + ++col]))
 	{
 		if (char_v == '\n' && (row = row + col + 1))
-			col = -1;
+			{
+				map_arr[row % mv->row][col] = '\0';
+				col = -1;
+			}
 		else
 			map_arr[row % mv->row][col] = char_v;
 	}
-	row = -1;
-	while (++row < mv->row)
-	{
-		putstrs(map_arr[row]);	
-		putstrs("\n");
-	}
+	print_map(mv, map_arr, -1);
+	return (1);
 }
 
+/*
+** FREE YOUR ARR, FREE YOUR ARR, FREEE YOUR GOD DAMN ARR
+*/
+
+void	free_map_arr(char **map_arr, t_map *info)
+{
+	while (info->row)
+		free(map_arr[info->row--]);
+	free(map_arr);
+}

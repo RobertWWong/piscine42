@@ -16,9 +16,13 @@
 # include <stdlib.h>
 
 /*
-** Custom struct to keep track of the column and row dimmensions of a valid map
-**
+** Custom struct to keep track of map attributes:
+** row total, column iterator, column total,
+** offset from reading first line legend,
+** legend describing row length,
+** empty, obstacle, and fill characters.
 */
+
 typedef struct	s_map
 {
 	int row;

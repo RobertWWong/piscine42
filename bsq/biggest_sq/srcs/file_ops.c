@@ -12,11 +12,6 @@
 
 #include "file_ops.h"
 
-int		open_file(char *str)
-{
-	return (open(str, O_RDONLY));
-}
-
 char	*ft_strcpy(char *dest, char *src)
 {
 	int i;
@@ -33,7 +28,7 @@ char	*ft_strcpy(char *dest, char *src)
 
 /*
 ** Function will read from a file_descriptor to a local buffer the content
-**  of said file. This will allow us to read character in a steadily manner.
+** of said file. This will allow us to read character in a steadily manner.
 ** Will change the buffer size accordingly as well.
 */
 

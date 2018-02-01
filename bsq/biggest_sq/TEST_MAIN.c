@@ -13,56 +13,51 @@
 #include "include/util_func.h"
 #include "include/file_ops.h"
 #include "include/map_creator.h"
-#include <stdio.h>
+#include "include/ft_bsq.h"
 
-// void	test_and_stuff(int c, char **argv)
-// {
-// 	int		fd;
-// 	char	*buff;
+/*
+** if (!(valid_map = check_map(buff, map_val)))
+** return (valid_map);	
+** solve_bsq(map_arr, map_val);
+** free_map_arr(map_arr, map_val);
+*/
 
-// 	if (c > 1)
-// 		fd = open(argv[1], O_RDONLY);
-// 	else
-// 		fd = open("maps/map4", O_RDONLY);
-// 	buff = write_to_buffer(fd);
-// 	printf("Is my file okay == %d\n", fd);
-// 	printf("%s\nPerl map gen has newline already. It us our responsibility to check if\
-// 	they follow that conventions for all other maps\n", buff);
-// 	printf("Line legend checking %d\n", check_line_legend(buff, legend));
-// 	printf("What is my global values? %d\n", legend[0]);
-// 	close(fd);
-// 	(void)c;
-// 	(void)argv;
-// }
-
-void	create_2d_arr(void)
+int		lets_play(char *str)
 {
 	int		fd;
 	char	*buff;
 	int		valid_map;
 	t_map	*map_val;
-	char	**arr;
+	char	**map_arr;
 
-	arr = NULL;
-
-	fd = open("maps/map4", O_RDONLY);
+	map_arr = NULL;
+	fd = open(str, O_RDONLY);
 	buff = write_to_buffer(fd);
+	close(fd);
 	map_val = (t_map *)malloc(sizeof(t_map));
-	if (!check_line_legend(buff, map_val) && !close(fd))
-		return ;
-	printf("Should be a valid map = %d\n", valid_map = check_map(buff, map_val));
-	printf("\n\nAmount of rows in this map = %d\nAmount of Columns in this Map = %d\n", map_val->row, map_val->col_ck);
-	
-	arr = init_2d_map(map_val);
-	parse_to_map(map_val, arr, buff);
+	if (!check_line_legend(buff, map_val))
+		return (-1);
 
+	(valid_map = check_map(buff, map_val));
+	map_arr = init_2d_map(map_val);
+	print_map(map_val, map_arr, -1);
+	return (1);
 }
+
 
 int		main(int argc, char **argv)
 {
-	// test_and_stuff(c, argv);
-	create_2d_arr();
-	(void)argc;
-	(void)argv;
+	int	i;
+	int error;
+
+	i = 0;
+	while (i < argc && argc > 1)
+	{
+		error = lets_play(argv[i++]);
+		putstrs("\n");
+
+	}
+	if (argc < 2)
+		lets_play("maps/map4");
 	return (0);
 }

@@ -13,18 +13,14 @@
 #include "include/util_func.h"
 #include "include/file_ops.h"
 #include "include/map_creator.h"
-// #include "util_func.h"
-// #include "file_ops.h"
-// #include "map_creator.h"
+#include "include/ft_bsq.h"
 #include <stdio.h>
 
 /*
 ** Fun with arrays, we will be using them to keep track of our legends
 ** HEY, THERE'S ONLY ONE MAP PER FILE
+** IF THERE IS A 1 X 1 SQ, AND IT'S AN OBSTACLE, DON'T PRINT IT
 */
-
-// void	parse_arg(char *str )
-
 
 int		main(int argc, char **argv)
 {
