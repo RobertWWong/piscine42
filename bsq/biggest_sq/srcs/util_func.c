@@ -23,7 +23,7 @@ void	putstrs(char *str)
 }
 
 /*
-* atoi function to determine length of our square map
+** atoi function to determine length of our square map
 */
 
 int		ft_atoi(char *str)
@@ -53,11 +53,11 @@ int		ft_atoi(char *str)
 }
 
 /*
-* This function will read the first line of the file and assign the
-* length, empty, full, and obstacle values to the global variable
-* Return 1 character assignment went well
-* Return -1 if amount of character legs is not met
-* Return -2 if more characters than necessary are present on the first line
+** This function will read the first line of the file and assign the
+** length, empty, full, and obstacle values to the global variable
+** Return 1 character assignment went well
+** Return -1 if amount of character legs is not met
+** Return -2 if more characters than necessary are present on the first line
 */
 
 int		check_line_legend(char *str, int leg[4])
@@ -83,62 +83,64 @@ int		check_line_legend(char *str, int leg[4])
 }
 
 /*
-* Check map util function that will compare map char to their specific legend
-* Returns -1 if the amount of column read is not consisent
-* Return -2 if there are unexpected characters inside the map.
-* Return the amount of rows read on a successful map reading.
+** Check map util function that will compare map char to their specific legend
+** Returns -1 if the amount of column read is not consisent
+** Return -2 if there are unexpected characters inside the map.
+** Return the amount of rows read on a successful map reading.
 */
-int		check_map_util(char *str, int leg[4], int offset, int char_ck)
-{
-	int row;
-	int col;
-	int line_ck;
-	int col_ck;
 
-	col_ck = 0;
+int		check_map_util(char *str, int leg[4], int offset, t_map *map)
+{
+	int line_ck;
+	int char_ck;
+
 	line_ck = 0;
-	row = 0;
-	col = 0;
-	while ((char_ck = str[row + ++col + offset + 1]) != '\0')
-	{	
-		if (char_ck == '\n')
+	char_ck = 0;
+	while ((char_ck = str[map->row + ++map->col + offset + 1]) != '\0')
+	{
+		if (char_ck == '\n' && ++line_ck)
 		{
-			line_ck++;
-			row += col + 1;
-			if (!col_ck)
-				col_ck = col;
-			if (col != col_ck || (line_ck == leg[0] && *(str + row + offset) != '\n'))
+			map->row += map->col + 1;
+			if (!map->col_ck)
+				map->col_ck = map->col;
+			if (map->col != map->col_ck ||
+				(line_ck == leg[0] && *(str + map->row + offset) != '\n'))
 				return (-1);
-			col = - 1;
+			map->col = -1;
 		}
 		else if (!(char_ck == leg[1] || char_ck == leg[2] || char_ck == leg[2]))
-				return (-2);
- 	}
- 	return (line_ck);
+			return (-2);
+	}
+	return (line_ck);
 }
 
 /*
-* This function checks if the lines present in the map have
-* the correct characters, matching amounts of columns and rows, or a newline
-* at the end of every row.
-* It calls a util function that will check each character for matching symbols
-* and returns the amount of rows read.
-* 
-* Return 1 for a valid map
-* Return -3 if the amount of rows read are not equal to the legend.
+** This function checks if the lines present in the map have
+** the correct characters, matching amounts of columns and rows, or a newline
+** at the end of every row.
+** It calls a util function that will check each character for matching symbols
+** and returns the amount of rows read.
+** It will also instantiate a t_map record for 2d char arr creation
+** Return 1 if map dimmensions and character follows the rules.
+** Return -4 for any internal errors and frees the struct map
 */
-int		check_map(char *str, int leg[4])
-{	
-	int offset;
+
+int		check_map(char *str, int leg[4], t_map *map)
+{
 	int line_ck;
 
-	offset = 0;
-	while (str[offset] != '\n')
-		offset++;
-	line_ck = check_map_util(str, leg, offset, 0);
-	if (line_ck < 0)
-		return (line_ck);
-	else if (line_ck != leg[0])
-		return (-3);
- 	return (1);
+	map->row = 0;
+	map->col = 0;
+	map->col_ck = 0;
+	map->offset = 0;
+	while (str[map->offset] != '\n')
+		map->offset++;
+	line_ck = check_map_util(str, leg, map->offset, map);
+	if (line_ck != leg[0] || line_ck < 0)
+	{
+		free(map);
+		return (-4);
+	}	
+	map->row = leg[0];
+	return (1);
 }

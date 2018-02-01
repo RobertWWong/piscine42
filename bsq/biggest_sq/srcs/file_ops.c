@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "file_ops.h"
-#include <stdio.h>
+
 int		open_file(char *str)
 {
-	return(open(str, O_RDONLY));
+	return (open(str, O_RDONLY));
 }
 
 char	*ft_strcpy(char *dest, char *src)
@@ -32,10 +32,11 @@ char	*ft_strcpy(char *dest, char *src)
 }
 
 /*
-* Function will read from a file_descriptor to a local buffer the content of said file
-* This will allow us to read character in a steadily manner. Will change the buffer size
-* accordingly as well.
+** Function will read from a file_descriptor to a local buffer the content
+**  of said file. This will allow us to read character in a steadily manner.
+** Will change the buffer size accordingly as well.
 */
+
 char	*write_to_buffer(int file_desc)
 {
 	char	*buffer;
@@ -47,7 +48,7 @@ char	*write_to_buffer(int file_desc)
 	buffer_size = 1;
 	cur_size = 0;
 	buffer = (char *)malloc(sizeof(char) * (buffer_size + 1));
-	while((nread = read(file_desc, buffer + cur_size, buffer_size)) > 0)
+	while ((nread = read(file_desc, buffer + cur_size, buffer_size)) > 0)
 	{
 		cur_size += nread;
 		if (cur_size > buffer_size)
@@ -60,6 +61,3 @@ char	*write_to_buffer(int file_desc)
 	}
 	return (buffer);
 }
-
-//When will i need to use malloc, realloc, and calloc? figure that out
-// char	*ft_realloc()

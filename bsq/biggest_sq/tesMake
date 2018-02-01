@@ -2,7 +2,7 @@ CC =gcc
 CFLAGS =-Iinclude/ -Wall -Wextra -Werror
 
 OUTPUT =bsq
-SRC := main.c $(wildcard srcs/*.c)
+SRC := TEST_MAIN.c $(wildcard srcs/*.c)
 OBJ := $(SRC:.c=.o) 
 
 all: $(OBJ)
