@@ -37,9 +37,10 @@ int		lets_play(char *str)
 	map_val = (t_map *)malloc(sizeof(t_map));
 	if (!check_line_legend(buff, map_val))
 		return (-1);
-
 	(valid_map = check_map(buff, map_val));
 	map_arr = init_2d_map(map_val);
+	parse_to_map(map_val, map_arr, buff);
+	solve_bsq(map_arr, map_val);
 	print_map(map_val, map_arr, -1);
 	return (1);
 }

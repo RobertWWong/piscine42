@@ -68,7 +68,6 @@ int		parse_to_map(t_map *mv, char **map_arr, char *str)
 		else
 			map_arr[row % mv->row][col] = char_v;
 	}
-	print_map(mv, map_arr, -1);
 	return (1);
 }
 
